@@ -2,8 +2,11 @@
 package com.github.mikephil.charting.charts;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
+import com.github.mikephil.charting.R;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.renderer.LineChartRenderer;
@@ -21,6 +24,18 @@ public class LineChart extends BarLineChartBase<LineData> implements LineDataPro
 
     public LineChart(Context context, AttributeSet attrs) {
         super(context, attrs);
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.LineChart,
+                0, 0);
+        try{
+            Description desc = new Description();
+            desc.setText(a.getString(0));
+            this.setDescription(desc);
+        }
+        finally{
+            a.recycle();
+        }
     }
 
     public LineChart(Context context, AttributeSet attrs, int defStyle) {
@@ -30,8 +45,8 @@ public class LineChart extends BarLineChartBase<LineData> implements LineDataPro
     @Override
     protected void init() {
         super.init();
-
         mRenderer = new LineChartRenderer(this, mAnimator, mViewPortHandler);
+
     }
 
     @Override
